@@ -1,20 +1,28 @@
 <template>
   <div id="app">
    <ul>
-     <li v-for="(task, index) in taskList" v-bind:key="task.task">
-       <p v-bind:class="{ 'done-task' : task.done }">{{task.task}}</p>
-       <input v-model="task.done" type="checkbox"/>
-       <button v-on:click="deleteItem(index)">Delete</button>
-       </li>
+     <todoItem v-for="(task, index) in taskList"
+     v-bind:key="task.task"
+     v-bind:taskData='task'>
+     </todoItem>
    </ul>
+  <form v-on:submit.prevent="addTask(newTask)">
+    <label>Add a new task:</label>
+    <input v-model="newTask" type="text"/>
+    <input type="submit"/>
+  </form>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
+  components: {
+    name: 'todoItem'
+  },
   data () {
     return {
+      newTask: '',
       taskList: [
         {
           done: false,
@@ -34,13 +42,22 @@ export default {
   methods: {
       deleteItem (index) {
         this.taskList.splice(index, 1)
-      }  
+      },
+      addTask () {
+        let taskItem = {
+          done: false,
+          task: this.newTask
+        }
+        this.taskList.push(taskItem)
+        this.newTask = ''
+      }
   }
 }
 
 </script>
 
 <style>
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -57,5 +74,6 @@ ul {
 
 .done-task {
   text-decoration: line-through;
-} 
+}
+
 </style>
