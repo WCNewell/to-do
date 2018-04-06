@@ -1,21 +1,17 @@
 <template>
-    <li id="todoItem"></li>
-    <p v-bind:class="{ 'done-task' : task.done }">{{task.task}}</p>
-    <input v-model="task.done" type="checkbox"/>
+  <li id="todoItem">
+    <p v-bind:class="{ 'done-task' : taskData.done }">{{taskData.task}}</p>
+    <input v-model="taskData.done" type="checkbox" />
     <button v-on:click="deleteItem(index)">Delete</button>
-
+  </li>
 </template>
 
 <script>
-import todoItem from './components/todo-item.vue'
-
-    export default {
-        name: 'todoItem',
-        props: ['taskData', 'index']
-
-    }
+export default {
+  name: 'todoItem',
+  props: ['taskData', 'index', 'deleteItem']
+}
 </script>
 
-<style lang="css scoped">
-
+<style lang="css" scoped>
 </style>
